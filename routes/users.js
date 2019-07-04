@@ -46,5 +46,8 @@ router.route('/add_user')
         res.send({ success: false })
       })
   })
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 module.exports = router;
