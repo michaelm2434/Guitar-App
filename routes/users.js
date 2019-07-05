@@ -1,15 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const User = require('../models').User;
 
-const Pool = require('pg').Pool
-
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'guitarapp',
-  password: 'postgres',
-  port: 5432,
-})
+var express = require('express')
+var router = express.Router()
 
 /* GET users listing. */
 router.route('/')
@@ -19,9 +11,12 @@ router.route('/')
 
 router.route('/get_users')
   .get((req, res, next) => {
-    pool.query('select * from users')
+    User.findAll({
+      attributes: ['userid', 'username', 'password']
+    })
       .then((results) => {
-          res.status(200).json(results.rows)
+        console.log(results)
+        res.send(results)
       })
       .catch((e) => {
         console.log(e)
@@ -31,23 +26,31 @@ router.route('/get_users')
 
 router.route('/add_user')
   .post((req, res, next) => {
-    const { 
-      userid,
+    const {
       username,
       password
     } = req.body
 
-    pool.query(`insert into users values (${userid}, ${username}, ${password})`)
-      .then((results) => {
-          res.send({ success: true })
+    User.max('userid')
+      .success((i) => {
+        User.bulkCreate([
+          {
+            userid: i,
+            username,
+            password
+          }
+        ]).then((results) => {
+          res.send({ success: true, results })
+        })
+          .catch((e) => {
+            console.log(e)
+            res.send({ sucess: false })
+          })
       })
-      .catch((e) => {
+      .error((e) => {
         console.log(e)
         res.send({ success: false })
       })
   })
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
 module.exports = router;
