@@ -30,3 +30,7 @@ To run the app:
   In another terminal cd to client folder and do "npm start" which will start the react app on port 3000.
   Since the client folder package.json has a proxy to port 3001, we have a connection between the frontend and backend.
   App should now be usable.
+  
+To confirm the db migration went smoothly, first go to your postgres guitarapp db and confirm that a users table was created from the migrations and then seeded with a testuser entry.
+
+To confirm app functionality, enter a username and password on the front end and click add user. Then go into the guitarapp db and see if this info was added to the table.
