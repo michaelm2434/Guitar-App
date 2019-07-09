@@ -26,7 +26,7 @@ Once you have postgres going, create a db called "guitarapp" then do sequelize d
 Then do sequelize db:seed:all.
 
 To run the app:
-  In base folder do "PORT=3001 npm start", this will start the server on port 3001
+  In base folder do "PORT=3001 npm start", this will start the server on port 3001.
   In another terminal cd to client folder and do "npm start" which will start the react app on port 3000.
   Since the client folder package.json has a proxy to port 3001, we have a connection between the frontend and backend.
   App should now be usable.
